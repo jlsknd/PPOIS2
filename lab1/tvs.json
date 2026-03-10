@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Горизонт 2206",
+    "specs": {
+      "model_name": "Горизонт 2206",
+      "technology": "LED",
+      "screen_diagonal": 30.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "response_time": 8,
+      "screen_coverage": "полуматовое",
+      "refresh_rate": 120,
+      "speakers_count": 2,
+      "speaker_power": 4,
+      "hdmi_ports": 2,
+      "usb_ports": 1,
+      "lan_ports": 1,
+      "has_wifi": true,
+      "has_bluetooth": true,
+      "has_smart_tv": true,
+      "color": "черный",
+      "weight": 6.0,
+      "lifespan": 3,
+      "brightness_nit": 350,
+      "os": "Яндекс ТВ",
+      "os_version": "4.3"
+    },
+    "current_tv": true
+  }
+]
