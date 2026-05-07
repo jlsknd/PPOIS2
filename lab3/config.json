@@ -1,0 +1,51 @@
+{
+  "display": {
+    "width": 900,
+    "height": 700,
+    "fps": 60,
+    "title": "Jewel Quest"
+  },
+  "grid": {
+    "rows": 8,
+    "cols": 8,
+    "cell_size": 60,
+    "offset_x": 150,
+    "offset_y": 120,
+    "gem_types": 6
+  },
+  "modes": {
+    "time": {
+      "duration": 60,
+      "tense_threshold": 15
+    },
+    "points": {
+      "levels": [3000, 3500, 5000]
+    }
+  },
+  "scoring": {
+    "match_per_gem": 10,
+    "combo_bonus": 5,
+    "bomb_per_gem": 20,
+    "clear_per_gem": 15,
+    "bomb_clear_combo": 25,
+    "mega_combo": 30
+  },
+  "specials": {
+    "bomb_radius": 1,
+    "bomb_double_radius": 2,
+    "bomb_spawn_chance": 0.03
+  },
+  "paths": {
+    "bgm_menu": "assets/sounds/bgm_menu.wav",
+    "bgm_calm": "assets/sounds/bgm_calm.wav",
+    "bgm_tense": "assets/sounds/bgm_tense.wav",
+    "sfx_swap": "assets/sounds/swap.wav",
+    "sfx_match": "assets/sounds/match.wav",
+    "sfx_bomb": "assets/sounds/bomb.wav",
+    "sfx_clear": "assets/sounds/clear.wav",
+    "sfx_click": "assets/sounds/click.wav",
+    "sfx_gem_click": "assets/sounds/gem_click.wav",
+    "sfx_win": "assets/sounds/win.wav",
+    "sfx_nomoves": "assets/sounds/nomoves.wav"
+  }
+}
