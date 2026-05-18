@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Мои телевизоры</h2>
+
+{% if tvs %}
+    <div class="tv-list">
+        {% for tv in tvs %}
+        <div class="tv-item {% if tv.selected %}selected{% endif %}" data-color="{{ tv.color }}">
+            <h3>{{ tv.name }}</h3>
+            <p>Модель: {{ tv.model }}</p>
+            <p>Статус: {% if tv.is_on %}Включен{% else %}Выключен{% endif %}</p>
+            <p> Цвет: {{ tv.color }}</p>
+            {% if tv.selected %}
+                <p>!Текущий выбранный!</p>
+            {% else %}
+                <a href="/select/{{ tv.index }}" class="btn">Выбрать</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card">
+        <p>У вас пока нет телевизоров.</p>
+        <a href="/add_tv" class="btn btn-success">Добавить первый телевизор</a>
+    </div>
+{% endif %}
+{% endblock %}

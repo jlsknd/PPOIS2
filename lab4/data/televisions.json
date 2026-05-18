@@ -1,0 +1,140 @@
+[
+  {
+    "name": "KIVI",
+    "specs": {
+      "model_name": "KIVI SR52",
+      "screen": {
+        "technology": "QLED",
+        "diagonal": 60.0,
+        "resolution_width": 3840,
+        "resolution_height": 2160,
+        "response_time_ms": 5,
+        "coverage": "антибликовое",
+        "refresh_rate_hz": 60,
+        "brightness_nits": 400,
+        "brightness": 50,
+        "contrast": 50
+      },
+      "audio": {
+        "speakers_count": 2,
+        "speaker_power_w": 10.0,
+        "has_subwoofer_output": false,
+        "subwoofer_connected": false,
+        "volume": 30,
+        "equalizer": {
+          "low": 67,
+          "mid": -67,
+          "high": 67
+        }
+      },
+      "has_dvb_s": false,
+      "has_dvb_s2": false,
+      "has_dvb_t": true,
+      "has_dvb_t2": true,
+      "has_dvb_c": false,
+      "has_dvb_c2": false,
+      "hdmi_ports": 3,
+      "usb_ports": 2,
+      "lan_ports": 1,
+      "antenna_inputs": 1,
+      "composite_inputs": 0,
+      "color": "черный",
+      "weight_kg": 15.0,
+      "dimensions": [
+        1000,
+        600,
+        250
+      ],
+      "vesa_mount": [
+        200,
+        200
+      ],
+      "aspect_ratio": [
+        16,
+        9
+      ],
+      "service_life_years": 10,
+      "has_wifi": true,
+      "has_bluetooth": true,
+      "has_smart_tv": false,
+      "operating_system": "отсутствует",
+      "os_version": "0.0"
+    },
+    "state": {
+      "is_on": true,
+      "current_source": "кабельное ТВ",
+      "current_channel": 12,
+      "wifi_enabled": false,
+      "bluetooth_enabled": false
+    }
+  },
+  {
+    "name": "Horizont",
+    "specs": {
+      "model_name": "Horizont Prezydencki",
+      "screen": {
+        "technology": "QLED",
+        "diagonal": 55.0,
+        "resolution_width": 2160,
+        "resolution_height": 3840,
+        "response_time_ms": 5,
+        "coverage": "антибликовое",
+        "refresh_rate_hz": 60,
+        "brightness_nits": 300,
+        "brightness": 52,
+        "contrast": 50
+      },
+      "audio": {
+        "speakers_count": 2,
+        "speaker_power_w": 10.0,
+        "has_subwoofer_output": true,
+        "subwoofer_connected": false,
+        "volume": 67,
+        "equalizer": {
+          "low": 69,
+          "mid": -67,
+          "high": 52
+        }
+      },
+      "has_dvb_s": false,
+      "has_dvb_s2": false,
+      "has_dvb_t": true,
+      "has_dvb_t2": true,
+      "has_dvb_c": false,
+      "has_dvb_c2": false,
+      "hdmi_ports": 3,
+      "usb_ports": 2,
+      "lan_ports": 1,
+      "antenna_inputs": 1,
+      "composite_inputs": 0,
+      "color": "фиолетовый",
+      "weight_kg": 15.0,
+      "dimensions": [
+        1000,
+        600,
+        250
+      ],
+      "vesa_mount": [
+        200,
+        200
+      ],
+      "aspect_ratio": [
+        16,
+        9
+      ],
+      "service_life_years": 10,
+      "has_wifi": true,
+      "has_bluetooth": true,
+      "has_smart_tv": true,
+      "operating_system": "Яндекс ТВ",
+      "os_version": "5.3"
+    },
+    "state": {
+      "is_on": true,
+      "current_source": "Smart TV",
+      "current_channel": 1,
+      "wifi_enabled": true,
+      "bluetooth_enabled": false
+    }
+  }
+]

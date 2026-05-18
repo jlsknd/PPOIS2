@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Управление: {{ tv.name }}</h2>
+
+<div class="card">
+    <h3>Текущее состояние</h3>
+    <p>Состояние: 
+        <span class="status-badge {% if status.power == 'включен' %}status-on{% else %}status-off{% endif %}">
+            {% if status.power == 'включен' %}Включен{% else %}Выключен{% endif %}
+        </span>
+    </p>
+    {% if status.power == 'включен' %}
+    <p>Режим: {{ status.source }}</p>
+    <p>Громкость: {{ status.audio.volume }}</p>
+    <p>Яркость: {{ status.screen.brightness }}</p>
+    <p>Контраст: {{ status.screen.contrast }}</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>Питание</h3>
+    <a href="/action/power" class="btn">{% if status.power == 'включен' %}Выключить{% else %}Включить{% endif %}</a>
+</div>
+
+{% if status.power == 'включен' %}
+
+<div class="card">
+    <h3>Режимы</h3>
+    <a href="/action/source_tv" class="btn">Кабельное ТВ</a>
+    {% if status.smart_tv.supported %}
+    <a href="/action/source_smart" class="btn">Smart TV</a>
+    {% endif %}
+</div>
+
+{% if status.source == "кабельное ТВ" %}
+<div class="card">
+    <h3>Каналы</h3>
+    <div class="btn-group">
+        <a href="/action/channel_up" class="btn">Канал +</a>
+        <a href="/action/channel_down" class="btn">Канал -</a>
+        <a href="/channels" class="btn">Список каналов</a>
+    </div>
+    {% if status.current_channel %}
+    <p style="margin-top: 15px;"><strong>Текущий канал:</strong> {{ status.current_channel.number }}. {{ status.current_channel.name }}</p>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="card">
+    <h3>Громкость</h3>
+    <form method="post" action="/set_volume" class="inline-form">
+        <input type="number" name="volume" value="{{ status.audio.volume }}" min="0" max="100">
+        <button type="submit">Установить</button>
+    </form>
+    <div class="btn-group">
+        <a href="/action/volume_up" class="btn">+5</a>
+        <a href="/action/volume_down" class="btn">-5</a>
+        <a href="/action/mute" class="btn">Mute</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Изображение</h3>
+    <h4>Яркость</h4>
+    <form method="post" action="/set_brightness" class="inline-form">
+        <input type="number" name="brightness" value="{{ status.screen.brightness }}" min="0" max="100">
+        <button type="submit">Установить</button>
+    </form>
+    <div class="btn-group">
+        <a href="/action/brightness_up" class="btn">+5</a>
+        <a href="/action/brightness_down" class="btn">-5</a>
+    </div>
+    
+    <h4>Контраст</h4>
+    <form method="post" action="/set_contrast" class="inline-form">
+        <input type="number" name="contrast" value="{{ status.screen.contrast }}" min="0" max="100">
+        <button type="submit">Установить</button>
+    </form>
+    <div class="btn-group">
+        <a href="/action/contrast_up" class="btn">+5</a>
+        <a href="/action/contrast_down" class="btn">-5</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Эквалайзер</h3>
+    <form method="post" action="/set_equalizer">
+        <div class="eq-sliders">
+            <div class="eq-slider-item">
+                <label>Низкие частоты:</label>
+                <input type="range" name="eq_low" min="-100" max="100" value="{{ status.audio.equalizer.low }}" 
+                       oninput="this.nextElementSibling.textContent = this.value">
+                <span class="eq-value">{{ status.audio.equalizer.low }}</span>
+            </div>
+            <div class="eq-slider-item">
+                <label>Средние частоты:</label>
+                <input type="range" name="eq_mid" min="-100" max="100" value="{{ status.audio.equalizer.mid }}" 
+                       oninput="this.nextElementSibling.textContent = this.value">
+                <span class="eq-value">{{ status.audio.equalizer.mid }}</span>
+            </div>
+            <div class="eq-slider-item">
+                <label>Высокие частоты:</label>
+                <input type="range" name="eq_high" min="-100" max="100" value="{{ status.audio.equalizer.high }}" 
+                       oninput="this.nextElementSibling.textContent = this.value">
+                <span class="eq-value">{{ status.audio.equalizer.high }}</span>
+            </div>
+        </div>
+        <button type="submit">Применить</button>
+    </form>
+</div>
+
+{% if tv.specs.audio.has_subwoofer_output %}
+<div class="card">
+    <h3>Сабвуфер</h3>
+    <p>Статус: 
+        <span class="status-badge {% if status.audio.subwoofer %}status-on{% else %}status-off{% endif %}">
+            {% if status.audio.subwoofer %}Подключен{% else %}Не подключен{% endif %}
+        </span>
+    </p>
+    <a href="/action/subwoofer_toggle" class="btn">Переключить</a>
+</div>
+{% endif %}
+
+<div class="card">
+    <h3>Сеть</h3>
+    <p>Wi-Fi: 
+        <span class="status-badge {% if status.wifi.enabled %}status-on{% else %}status-off{% endif %}">
+            {% if status.wifi.enabled %}Вкл{% else %}Выкл{% endif %}
+        </span>
+        {% if status.wifi.supported %}
+        <a href="/action/wifi_toggle" class="btn-small">Переключить</a>
+        {% endif %}
+    </p>
+    <p>Bluetooth: 
+        <span class="status-badge {% if status.bluetooth.enabled %}status-on{% else %}status-off{% endif %}">
+            {% if status.bluetooth.enabled %}Вкл{% else %}Выкл{% endif %}
+        </span>
+        {% if status.bluetooth.supported %}
+        <a href="/action/bluetooth_toggle" class="btn-small">Переключить</a>
+        {% endif %}
+    </p>
+</div>
+
+{% if status.bluetooth.supported and status.bluetooth.enabled %}
+<div class="card">
+    <h3>Bluetooth устройства</h3>
+    <div class="btn-group">
+        <a href="/action/bt_scan" class="btn">Поиск новых устройств</a>
+        <a href="/action/bt_toggle_list" class="btn">
+            {% if show_bt_list %}Скрыть список{% else %}Показать мои устройства{% endif %}
+        </a>
+    </div>
+    
+    {% if show_bt_list and bt_paired_devices %}
+    <div style="margin-top: 15px;">
+        <h4>Сопряженные устройства:</h4>
+        <ul>
+        {% for device in bt_paired_devices %}
+            <li>
+                {{ device.name }} ({{ device.type }})
+                {% if device.connected %}
+                <span class="status-badge status-on">Подключено</span>
+                <a href="/action/bt_disconnect/{{ device.name }}" class="btn-small">Отключить</a>
+                {% else %}
+                <a href="/action/bt_connect/{{ device.name }}" class="btn-small">Подключить</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    {% if bt_scan_results %}
+    <div style="margin-top: 15px;">
+        <h4>Найденные устройства (для сопряжения):</h4>
+        <ul>
+        {% for device in bt_scan_results %}
+            <li>
+                {{ device.name }} ({{ device.type }})
+                {% if device.name not in bt_paired_names %}
+                <a href="/action/bt_pair/{{ device.name }}" class="btn-small">Сопрячь</a>
+                {% else %}
+                <span class="status-badge status-on">Уже сопряжено</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+        <a href="/action/bt_clear_scan" class="btn-small">Очистить список поиска</a>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="card">
+    <h3> Порты</h3>
+    <p>HDMI: {{ tv.specs.hdmi_ports }}</p>
+    <p>USB: {{ tv.specs.usb_ports }}</p>
+    <p>LAN: {{ tv.specs.lan_ports }}</p>
+    {% if tv.specs.hdmi_ports > 0 %}
+    <a href="/hdmi" class="btn">🔌 Управление HDMI</a>
+    {% endif %}
+</div>
+
+{% if tv.specs.has_smart_tv and tv.is_on and status.wifi.enabled %}
+    {% set current_version = status.smart_tv.version|float %}
+    {% set max_version = tv.specs._original_version + 1.0 %}
+    {% if current_version < max_version %}
+    <div class="card">
+        <h3>Smart TV</h3>
+        <p>ОС: {{ status.smart_tv.os }}</p>
+        <p>Версия: {{ status.smart_tv.version }}</p>
+        <p><small>Максимальная версия: {{ max_version|round(1) }}</small></p>
+        <div class="btn-group">
+            <a href="/action/update_os" class="btn update-btn">Обновить одну версию</a>
+            <a href="/action/update_all" class="btn update-all-btn">Скачать все обновления</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="card">
+        <h3>Smart TV</h3>
+        <p>ОС: {{ status.smart_tv.os }}</p>
+        <p>Версия: {{ status.smart_tv.version }}</p>
+        <p>Текущая версия актуальна</p>
+    </div>
+    {% endif %}
+{% elif tv.specs.has_smart_tv and tv.is_on and not status.wifi.enabled %}
+<div class="card">
+    <h3>Smart TV</h3>
+    <p>ОС: {{ status.smart_tv.os }}</p>
+    <p>Версия: {{ status.smart_tv.version }}</p>
+    <p>Для обновления ПО включите Wi-Fi</p>
+</div>
+{% endif %}
+
+<div class="card">
+    <h3>Управление телевизором</h3>
+    <p>Удалить текущий телевизор "{{ tv.name }}" из системы.</p>
+    <a href="/delete_tv" class="btn btn-danger" 
+       onclick="return confirm('Вы уверены, что хотите удалить телевизор «{{ tv.name }}»? Это действие нельзя отменить.');">
+        Удалить телевизор
+    </a>
+</div>
+
+<div class="card">
+    <a href="/status" class="btn">Полный статус</a>
+    <a href="/specs" class="btn">Характеристики</a>
+</div>
+
+{% endif %}
+
+{% endblock %}

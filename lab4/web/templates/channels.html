@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список каналов</h2>
+<h3>Телевизор: {{ tv.name }}</h3>
+
+<div class="card">
+    <div class="channel-list">
+        {% for channel in channels %}
+        <div class="channel-item" onclick="location.href='/action/channel_{{ channel.number }}'">
+            <span class="channel-number">{{ channel.number }}</span>
+            <span class="channel-name">{{ channel.name }}</span>
+            <span class="channel-genre">{{ channel.genre }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card">
+    <a href="/control" class="btn">Назад к управлению</a>
+</div>
+{% endblock %}

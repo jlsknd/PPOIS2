@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Состояние телевизора</h2>
+
+<div class="card">
+    <h3>{{ status.name }}</h3>
+    
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">Питание:</span> {{ status.power }}</div>
+        <div class="spec-item"><span class="spec-label">Режим:</span> {{ status.source }}</div>
+        
+        {% if status.current_channel %}
+        <div class="spec-item"><span class="spec-label">Канал:</span> {{ status.current_channel.number }}. {{ status.current_channel.name }}</div>
+        <div class="spec-item"><span class="spec-label">Жанр:</span> {{ status.current_channel.genre }}</div>
+        {% endif %}
+        
+        <div class="spec-item"><span class="spec-label">Яркость:</span> {{ status.screen.brightness }}</div>
+        <div class="spec-item"><span class="spec-label">Контраст:</span> {{ status.screen.contrast }}</div>
+        <div class="spec-item"><span class="spec-label">Громкость:</span> {{ status.audio.volume }}</div>
+        <div class="spec-item"><span class="spec-label">Сабвуфер:</span> {% if status.audio.subwoofer %}Подключен{% else %}Не подключен{% endif %}</div>
+        <div class="spec-item"><span class="spec-label">Эквалайзер:</span> НЧ={{ status.audio.equalizer.low }}, СЧ={{ status.audio.equalizer.mid }}, ВЧ={{ status.audio.equalizer.high }}</div>
+        
+        <div class="spec-item"><span class="spec-label">Wi-Fi:</span> {% if status.wifi.enabled %}Включен{% else %}Выключен{% endif %}</div>
+        <div class="spec-item"><span class="spec-label">Bluetooth:</span> {% if status.bluetooth.enabled %}Включен{% else %}Выключен{% endif %}</div>
+        
+        <div class="spec-item">
+            <span class="spec-label">Bluetooth устройства:</span>
+            {% if status.bluetooth.enabled and bt_connected_devices %}
+                {% for device in bt_connected_devices %}
+                    {{ device.name }} ({{ device.type }}){% if not loop.last %}, {% endif %}
+                {% endfor %}
+            {% elif status.bluetooth.enabled %}
+                Нет подключенных устройств
+            {% else %}
+                Bluetooth выключен
+            {% endif %}
+        </div>
+        
+        <div class="spec-item">
+            <span class="spec-label">HDMI устройства:</span>
+            {% if hdmi_devices %}
+                {% for port, device in hdmi_devices.items() %}
+                    HDMI {{ port }}: {{ device }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                Нет подключенных устройств
+            {% endif %}
+        </div>
+        
+        {% if status.smart_tv.supported %}
+        <div class="spec-item"><span class="spec-label">Smart TV:</span> {{ status.smart_tv.os }} ({{ status.smart_tv.version }})</div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <a href="/control" class="btn">Управление</a>
+    <a href="/specs" class="btn">Характеристики</a>
+</div>
+{% endblock %}

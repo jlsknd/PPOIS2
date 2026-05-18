@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>+ Добавить телевизор</h2>
+
+{% if errors %}
+<div class="error-box">
+    <h3> Исправьте следующие ошибки:</h3>
+    <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<div class="card">
+    <form method="post">
+        <div class="form-group">
+            <label>Название телевизора:</label>
+            <input type="text" name="name" value="{{ form_data.get('name', '') }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Модель:</label>
+            <input type="text" name="model_name" value="{{ form_data.get('model_name', '') }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Технология экрана:</label>
+            <select name="technology">
+                {% for tech_value, tech_enum in technologies %}
+                <option value="{{ tech_value }}">{{ tech_value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Диагональ (дюймы):</label>
+            <input type="number" name="screen_diagonal" value="55" min="10" max="100" step="0.1" required>
+            <small>от 10 до 100 дюймов</small>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group half">
+                <label>Ширина разрешения (пиксели):</label>
+                <input type="number" name="resolution_width" value="2160" min="480" max="4320" required>
+                <small>макс 4320</small>
+            </div>
+            <div class="form-group half">
+                <label>Высота разрешения (пиксели):</label>
+                <input type="number" name="resolution_height" value="3840" min="640" max="7680" required>
+                <small>макс 7680</small>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group half">
+                <label>Время отклика (мс):</label>
+                <input type="number" name="response_time_ms" value="5" min="1" max="50" required>
+            </div>
+            <div class="form-group half">
+                <label>Частота обновления (Гц):</label>
+                <input type="number" name="refresh_rate_hz" value="60" min="24" max="360" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Яркость (нит):</label>
+            <input type="number" name="brightness_nits" value="300" min="100" max="2000" required>
+            <small>от 100 до 2000 нит</small>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group half">
+                <label>Количество динамиков:</label>
+                <input type="number" name="speakers_count" value="2" min="0" max="6" required>
+                <small>макс 6</small>
+            </div>
+            <div class="form-group half">
+                <label>Мощность динамика (Вт):</label>
+                <input type="number" name="speaker_power_w" value="10" min="0" max="15" step="0.1" required>
+                <small>макс 15 Вт</small>
+            </div>
+        </div>
+
+        <div class="form-group checkbox">
+            <label><input type="checkbox" name="has_subwoofer"> ➕ Выход для сабвуфера</label>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group third">
+                <label>HDMI порты:</label>
+                <input type="number" name="hdmi_ports" value="3" min="0" max="8">
+            </div>
+            <div class="form-group third">
+                <label>USB порты:</label>
+                <input type="number" name="usb_ports" value="2" min="0" max="8">
+            </div>
+            <div class="form-group third">
+                <label>LAN порты:</label>
+                <input type="number" name="lan_ports" value="1" min="0" max="2">
+            </div>
+        </div>
+
+        <div class="form-group checkbox">
+            <label><input type="checkbox" name="has_wifi" checked> Встроенный Wi-Fi</label>
+        </div>
+
+        <div class="form-group checkbox">
+            <label><input type="checkbox" name="has_bluetooth" checked> Встроенный Bluetooth</label>
+        </div>
+
+        <div class="form-group checkbox">
+            <label><input type="checkbox" name="has_smart_tv" id="has_smart_tv" checked>Smart TV</label>
+        </div>
+
+        <div id="smart_tv_fields">
+            <div class="form-group">
+                <label>Операционная система:</label>
+                <select name="operating_system">
+                    <option value="NONE">--- Нет ОС ---</option>
+                    {% for os_value, os_name in os_types %}
+                    <option value="{{ os_value }}">{{ os_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Версия ОС:</label>
+                <input type="text" name="os_version" value="1.0" placeholder="например: 1.0, 5.2, 12.5">
+                <small>формат: число.число (например: 1.0, 5.2, 12.5)</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Цвет:</label>
+            <select name="color">
+                {% for color_name, color_code in allowed_colors %}
+                <option value="{{ color_name }}">{{ color_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Вес (кг):</label>
+            <input type="number" name="weight_kg" value="15" min="0.1" max="500" step="0.1" required>
+        </div>
+
+        <div class="form-group">
+            <label>Срок службы (лет):</label>
+            <input type="number" name="service_life_years" value="10" min="1" max="30" required>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">Добавить телевизор</button>
+            <a href="/" class="btn">Отмена</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // показывать/скрывать поля ОС в зависимости от чекбокса Smart TV
+    const smartTvCheckbox = document.getElementById('has_smart_tv');
+    const smartTvFields = document.getElementById('smart_tv_fields');
+    const osSelect = document.querySelector('select[name="operating_system"]');
+    const osVersionInput = document.querySelector('input[name="os_version"]');
+
+    function toggleSmartTvFields() {
+        if (smartTvCheckbox.checked) {
+            smartTvFields.style.display = 'block';
+            osSelect.required = true;
+            osVersionInput.required = true;
+            if (osSelect.value === 'NONE') {
+                osSelect.value = 'ANDROID_TV';
+            }
+            if (!osVersionInput.value || osVersionInput.value === '0.0') {
+                osVersionInput.value = '1.0';
+            }
+        } else {
+            smartTvFields.style.display = 'none';
+            osSelect.required = false;
+            osVersionInput.required = false;
+            osSelect.value = 'NONE';
+            osVersionInput.value = '0.0';
+        }
+    }
+
+    smartTvCheckbox.addEventListener('change', toggleSmartTvFields);
+    toggleSmartTvFields();
+
+    // валидация формата версии перед отправкой
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const hasSmartTv = smartTvCheckbox.checked;
+        const osVersion = osVersionInput.value.trim();
+        const versionPattern = /^\d+\.\d+$/;
+
+        if (hasSmartTv) {
+            if (!versionPattern.test(osVersion)) {
+                e.preventDefault();
+                alert('Версия ОС должна быть в формате "число.число"\n\nПримеры: 1.0, 5.2, 12.5');
+                return false;
+            }
+            if (osSelect.value === 'NONE') {
+                e.preventDefault();
+                alert('Выберите операционную систему (не "Нет ОС")');
+                return false;
+            }
+        }
+
+        // Проверка полей с числами
+        const diagonal = parseFloat(document.querySelector('input[name="screen_diagonal"]').value);
+        if (diagonal < 10 || diagonal > 100) {
+            e.preventDefault();
+            alert('Диагональ должна быть от 10 до 100 дюймов');
+            return false;
+        }
+
+        const brightness = parseInt(document.querySelector('input[name="brightness_nits"]').value);
+        if (brightness < 100 || brightness > 2000) {
+            e.preventDefault();
+            alert('Яркость должна быть от 100 до 2000 нит');
+            return false;
+        }
+
+        const speakers = parseInt(document.querySelector('input[name="speakers_count"]').value);
+        if (speakers < 0 || speakers > 6) {
+            e.preventDefault();
+            alert('Количество динамиков должно быть от 0 до 6');
+            return false;
+        }
+
+        const speakerPower = parseFloat(document.querySelector('input[name="speaker_power_w"]').value);
+        if (speakerPower < 0 || speakerPower > 15) {
+            e.preventDefault();
+            alert('Мощность динамика должна быть от 0 до 15 Вт');
+            return false;
+        }
+
+        return true;
+    });
+</script>
+{% endblock %}

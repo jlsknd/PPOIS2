@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Технические характеристики</h2>
+
+<div class="card">
+    <h3>{{ specs.model_name }}</h3>
+    
+    <h3>Экран</h3>
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">Технология:</span> {{ specs.screen.technology.value }}</div>
+        <div class="spec-item"><span class="spec-label">Диагональ:</span> {{ specs.screen.diagonal }}"</div>
+        <div class="spec-item"><span class="spec-label">Разрешение:</span> {{ specs.screen.resolution_width }}x{{ specs.screen.resolution_height }}</div>
+        <div class="spec-item"><span class="spec-label">Время отклика:</span> {{ specs.screen.response_time_ms }} мс</div>
+        <div class="spec-item"><span class="spec-label">Частота:</span> {{ specs.screen.refresh_rate_hz }} Гц</div>
+        <div class="spec-item"><span class="spec-label">Яркость:</span> {{ specs.screen.brightness_nits }} нит</div>
+    </div>
+    
+    <h3>Аудио</h3>
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">Динамики:</span> {{ specs.audio.speakers_count }} x {{ specs.audio.speaker_power_w }} Вт</div>
+        <div class="spec-item"><span class="spec-label">Сабвуфер:</span> {% if specs.audio.has_subwoofer_output %}Есть выход{% else %}Нет выхода{% endif %}</div>
+    </div>
+    
+    <h3>Разъемы</h3>
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">HDMI:</span> {{ specs.hdmi_ports }}</div>
+        <div class="spec-item"><span class="spec-label">USB:</span> {{ specs.usb_ports }}</div>
+        <div class="spec-item"><span class="spec-label">LAN:</span> {{ specs.lan_ports }}</div>
+    </div>
+    
+    <h3>Функции</h3>
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">Smart TV:</span> {% if specs.has_smart_tv %}Да{% else %}Нет{% endif %}</div>
+        <div class="spec-item"><span class="spec-label">Wi-Fi:</span> {% if specs.has_wifi %}Да{% else %}Нет{% endif %}</div>
+        <div class="spec-item"><span class="spec-label">Bluetooth:</span> {% if specs.has_bluetooth %}Да{% else %}Нет{% endif %}</div>
+    </div>
+    
+    {% if specs.has_smart_tv %}
+    <h3>Операционная система</h3>
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">ОС:</span> {{ specs.operating_system.value }}</div>
+        <div class="spec-item"><span class="spec-label">Версия:</span> {{ specs.os_version }}</div>
+    </div>
+    {% endif %}
+    
+    <h3>Физические характеристики</h3>
+    <div class="specs-grid">
+        <div class="spec-item"><span class="spec-label">Цвет:</span> {{ specs.color }}</div>
+        <div class="spec-item"><span class="spec-label">Вес:</span> {{ specs.weight_kg }} кг</div>
+        <div class="spec-item"><span class="spec-label">Срок службы:</span> {{ specs.service_life_years }} лет</div>
+    </div>
+</div>
+
+<div class="card">
+    <a href="/control" class="btn">Управление</a>
+    <a href="/status" class="btn">Статус</a>
+</div>
+{% endblock %}
